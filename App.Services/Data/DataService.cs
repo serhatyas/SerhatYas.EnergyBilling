@@ -33,7 +33,6 @@ namespace App.Services.Data
         }
 
         // Excel dosyasından veri yükle
-v
         public async Task<DataLoadResult> LoadDataFromExcelAsync(string filePath)
         {
             var result = new DataLoadResult();
