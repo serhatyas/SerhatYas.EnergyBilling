@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.PriceInfos
 {
+
+    // Bellekteki fiyat bilgilerine erişim sağlar.
+    // Tarife, kWh başına fiyat, BTV, KDV gibi bilgileri içerir.
+
+    //Fiyat bilgilerinde ptf fiyatları getirir
     public class PriceInfoRepository : GenericRepository<PriceInfo>, IPriceInfoRepository
     {
         public PriceInfoRepository(List<PriceInfo> priceInfos) : base(priceInfos)

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.PriceInfos
 {
+    //Fiyat bilgilerinde ptf model hali
+
     public class PriceInfo
     {
         // Tarih ve Saat Bilgisi

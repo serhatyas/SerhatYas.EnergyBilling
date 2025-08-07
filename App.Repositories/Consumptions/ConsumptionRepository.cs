@@ -2,6 +2,11 @@
 
 namespace App.Repositories.Consumptions
 {
+
+    // Bellekteki tüketim (consumption) verilerine erişim sağlar.
+    // Sayaç numarasına ve döneme göre tüketim verilerini getirir.
+
+    // s1 s2 s3 tüketimleri getirir
     public class ConsumptionRepository : GenericRepository<Consumption>, IConsumptionRepository
     {
         public ConsumptionRepository(List<Consumption> consumptions) : base(consumptions)

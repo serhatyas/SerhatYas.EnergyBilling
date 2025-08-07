@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.Enums
 {
-    //Satış Yöntemi Türleri
+    //sayaç bilgiler - Satış Yöntemi Türleri
     public enum SalesMethod
     {
         // (PTF+YEK) %Komisyon

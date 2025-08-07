@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace App.Services.Data
 {
+    // API veya UI katmanına veri sağlayan servis katmanıdır.
+    // Sayaç listesi, tüketim detayları ve fiyat bilgilerini birleştirip sunar.
+
     public class DataService : IDataService
     {
         private readonly IExcelDataReader _excelDataReader;
@@ -30,6 +33,7 @@ namespace App.Services.Data
         }
 
         // Excel dosyasından veri yükle
+v
         public async Task<DataLoadResult> LoadDataFromExcelAsync(string filePath)
         {
             var result = new DataLoadResult();
@@ -78,6 +82,9 @@ namespace App.Services.Data
         // Sistem durumunu kontrol et
         public async Task<bool> IsDataLoadedAsync()
         {
+
+            //Bellekte sayaç bilgileri yüklendiğini kontrol eder.
+
             var meters = await _meterRepository.GetAllAsync();
             return meters.Any();
         }
@@ -85,6 +92,8 @@ namespace App.Services.Data
         // Veri istatistikleri
         public async Task<DataLoadResult> GetDataStatisticsAsync()
         {
+
+            // Yüklenen sayaç, tüketim ve fiyat bilgisi adedini döner.
             var result = new DataLoadResult
             {
                 Success = true,
@@ -100,6 +109,8 @@ namespace App.Services.Data
         // Sayaçları getir
         public async Task<List<Meter>> GetMetersAsync()
         {
+            // tüm sayaçları getirir.
+
             var meters = await _meterRepository.GetAllAsync();
             return meters.ToList();
         }
@@ -107,6 +118,8 @@ namespace App.Services.Data
         // Tüketim verilerini getir
         public async Task<List<Consumption>> GetConsumptionsAsync(DateTime? startDate = null, DateTime? endDate = null)
         {
+            // Tarihe göre filtreli ya da tüm tüketimleri getirir.
+
             if (startDate.HasValue && endDate.HasValue)
             {
                 var consumptions = await _consumptionRepository.GetByDateRangeAsync(startDate.Value, endDate.Value);
@@ -120,6 +133,8 @@ namespace App.Services.Data
         // Fiyat bilgilerini getir
         public async Task<List<PriceInfo>> GetPriceInfosAsync(DateTime? startDate = null, DateTime? endDate = null)
         {
+            //Tarihe göre filtreli ya da tüm fiyat bilgilerini getirir.
+
             if (startDate.HasValue && endDate.HasValue)
             {
                 var priceInfos = await _priceInfoRepository.GetByDateRangeAsync(startDate.Value, endDate.Value);

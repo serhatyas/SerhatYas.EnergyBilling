@@ -6,7 +6,12 @@ using Meter = App.Repositories.Meters.Meter;
 
 namespace App.Repositories.Data
 {
-    public class ExcelDataReader : IExcelDataReader
+
+    // Excel dosyasından sayaç, tüketim ve fiyat verilerini okur ve belleğe yükler.
+
+    public class ExcelDataReader
+        
+        : IExcelDataReader
     {
         private string _filePath;
 
@@ -28,6 +33,8 @@ namespace App.Repositories.Data
 
         public async Task<List<Meter>> ReadMetersAsync()
         {
+            //sayaç bilgilerini çeker
+
             var meters = new List<Meter>();
 
             using var workbook = new XLWorkbook(_filePath);
@@ -68,6 +75,9 @@ namespace App.Repositories.Data
 
         public async Task<List<Consumption>> ReadConsumptionsAsync()
         {
+
+            //s1, s2, s3 sayfalarındaki veriyi okur,  filtrelenebilir hale geliyor.
+
             var consumptions = new List<Consumption>();
 
             using var workbook = new XLWorkbook(_filePath);
@@ -107,6 +117,9 @@ namespace App.Repositories.Data
 
         public async Task<List<PriceInfo>> ReadPriceInfosAsync()
         {
+
+            //fiyat bilgilerini çeker
+
             var priceInfos = new List<PriceInfo>();
 
             using var workbook = new XLWorkbook(_filePath);

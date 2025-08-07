@@ -1,7 +1,7 @@
 ﻿namespace App.Repositories.Consumptions
 {
 
-    // Sayaç tüketim bilgilerini temsil eden entity sınıfı
+    // s1 s2 s3 model hali
     public class Consumption
     {
         // Sayaç Numarası

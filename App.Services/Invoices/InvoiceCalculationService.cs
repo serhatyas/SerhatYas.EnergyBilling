@@ -12,6 +12,12 @@ using System.Threading.Tasks;
 
 namespace App.Services.Invoices
 {
+
+    // Sayaç ve tüketim verilerine göre fatura tutarını hesaplar.
+    // Komisyon, indirim, KDV ve BTV dahil tüm kalemleri değerlendirir.
+
+    // Fatura hesaplama servisi
+
     public class InvoiceCalculationService : IInvoiceCalculationService
     {
         private readonly IMeterRepository _meterRepository;
@@ -29,6 +35,7 @@ namespace App.Services.Invoices
         }
 
         // Fatura hesaplama
+        //tüm sayaçları hesaplar
         public async Task<InvoiceCalculationResponse> CalculateInvoicesAsync(InvoiceCalculationRequest request)
         {
             var response = new InvoiceCalculationResponse();
@@ -71,24 +78,28 @@ namespace App.Services.Invoices
                 TotalConsumption = consumptions.Sum(c => c.ConsumptionAmount)
             };
 
-            // Enerji bedeli hesapla
+            // Enerji bedeli hesapla ((ptf + yek)*s1,s2,s3tüketim(mwh))
             var energyCalculation = CalculateEnergyAmount(meter, consumptions.ToList(), priceInfos.ToList());
             invoiceDetail.EnergyAmount = energyCalculation.totalAmount;
             invoiceDetail.HourlyDetails = energyCalculation.hourlyDetails;
 
-            // Dağıtım bedeli hesapla
+            // Tarifeye göre Dağıtım bedeli hesapla (Sanayi, Ticarethane)
             invoiceDetail.DistributionAmount = CalculateDistributionAmount(meter, invoiceDetail.TotalConsumption);
 
             // BTV hesapla
+            // Enerji bedeli üzerinden BTV oranı uygulanır (örnek: 1% veya 5%)
             invoiceDetail.MunicipalityTaxAmount = invoiceDetail.EnergyAmount * meter.MunicipalityTaxRate;
 
-            // Ara toplam
+            // Ara toplam (Enerji + Dağıtım)
+            // Bu aşamada BTV ve KDV henüz eklenmemiştir.
             invoiceDetail.SubTotal = invoiceDetail.EnergyAmount + invoiceDetail.DistributionAmount;
 
-            // KDV hesapla
+            // KDV hesapla (ara toplam * KDV oranı)
             invoiceDetail.VatAmount = invoiceDetail.SubTotal * meter.VatRate;
 
-            // Toplam fatura
+            // Toplam fatura (Enerji + Dağıtım + BTV + KDV)
+            // BTV dahil değildir → BTV ayrı gösterilir.
+            // TotalAmount = AraToplam + KDV
             invoiceDetail.TotalAmount = invoiceDetail.SubTotal + invoiceDetail.VatAmount;
 
             return invoiceDetail;

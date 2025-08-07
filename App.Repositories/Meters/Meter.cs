@@ -4,6 +4,8 @@ namespace App.Repositories.Meters
 {
     public class Meter
     {
+
+        //exceldeki sayaç bilgileri
         
         // Sayaç numarası     
         public string MeterNumber { get; set; } = string.Empty;

@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace App.Services.Municipalitie
 {
+
+    // Belediye Tüketim Vergisi (BTV) hesaplamalarını yapar.
+    // İlgili dönem ve tarifeye göre vergileri hesaplar.
+
+    // Belediye ödemelerini hesaplayan servis
+
     public class MunicipalityPaymentService : IMunicipalityPaymentService
     {
         private readonly IInvoiceCalculationService _invoiceCalculationService;

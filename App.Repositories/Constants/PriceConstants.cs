@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.Constants
 {
+    //excel fiyat bilgileri d ve e kısmı
+
     public static class PriceConstants
     {
         // YEK Fiyatı (TL/MWh)

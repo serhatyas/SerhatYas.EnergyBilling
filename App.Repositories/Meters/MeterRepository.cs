@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.Meters
 {
+
+    // Bellekteki sayaç (meter) verilerine erişim sağlar.
+    // Sayaç numarasına göre filtreleme ve listeleme işlemlerini içerir.
+
     public class MeterRepository : GenericRepository<Meter>, IMeterRepository
     {
         public MeterRepository(List<Meter> meters) : base(meters)
