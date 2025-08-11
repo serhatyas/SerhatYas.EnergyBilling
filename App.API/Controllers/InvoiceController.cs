@@ -1,4 +1,6 @@
-﻿using App.Services.Invoices.SerhatYas.EnergyBilling.App.Services.Invoices;
+﻿using App.API.Queries.Invoices;
+using App.Services.Invoices.SerhatYas.EnergyBilling.App.Services.Invoices;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.API.Controllers
@@ -7,20 +9,17 @@ namespace App.API.Controllers
     [Route("api/[controller]")]
     public class InvoiceController : ControllerBase
     {
-        private readonly IInvoiceCalculationService _invoiceCalculationService;
+        private readonly IMediator _mediator;
 
-        public InvoiceController(IInvoiceCalculationService invoiceCalculationService)
+        public InvoiceController(IMediator mediator)
         {
-            _invoiceCalculationService = invoiceCalculationService;
+            _mediator = mediator;
         }
 
         [HttpPost("calculate")]
         public async Task<ActionResult<InvoiceCalculationResponse>> CalculateInvoices([FromBody] InvoiceCalculationRequest request)
         {
-            if (request.EndDate < request.StartDate)
-                return BadRequest("Bitiş tarihi başlangıç tarihinden önce olamaz");
-
-            var result = await _invoiceCalculationService.CalculateInvoicesAsync(request);
+            var result = await _mediator.Send(new CalculateInvoicesQuery(request));
             return Ok(result);
         }
 
@@ -30,7 +29,8 @@ namespace App.API.Controllers
             [FromQuery] DateTime startDate,
             [FromQuery] DateTime endDate)
         {
-            var result = await _invoiceCalculationService.CalculateMeterInvoiceAsync(meterNumber, startDate, endDate);
+            var query = new GetMeterInvoiceQuery(meterNumber, startDate, endDate);
+            var result = await _mediator.Send(query);
             return Ok(result);
         }
     }

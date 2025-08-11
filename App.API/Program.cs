@@ -6,6 +6,7 @@ using App.Services.Data;
 using App.Services.Invoices;
 using App.Services.Invoices.SerhatYas.EnergyBilling.App.Services.Invoices;
 using App.Services.Municipalitie;
+using MediatR;
 
 internal class Program
 {
@@ -19,6 +20,9 @@ internal class Program
         // Swagger ekle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        // MediatR ekle
+        builder.Services.AddMediatR(typeof(Program).Assembly);
 
         // Excel dosya yolu
         var excelFilePath = builder.Configuration.GetValue<string>("ExcelFilePath") ?? "Data/Sayax_Task_Veri.xlsx";
@@ -52,6 +56,19 @@ internal class Program
         builder.Services.AddScoped<IInvoiceCalculationService, InvoiceCalculationService>();
         builder.Services.AddScoped<IMunicipalityPaymentService, MunicipalityPaymentService>();
         builder.Services.AddScoped<IDataService, DataService>();
+
+        var allowFrontend = "_allowFrontend";
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: allowFrontend, policy =>
+            {
+                policy.WithOrigins("http://localhost:4200")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+                // .AllowCredentials(); // cookie/auth varsa
+            });
+        });
 
         var app = builder.Build();
 

@@ -11,7 +11,7 @@ namespace App.Repositories.Base
     {
         Task<IEnumerable<T>> GetAllAsync();
 
-        Task<T?> GetByIdAsync(object id);
+        public abstract Task<T?> GetByIdAsync(object id);
 
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 

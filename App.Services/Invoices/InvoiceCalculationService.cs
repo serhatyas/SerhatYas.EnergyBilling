@@ -4,6 +4,7 @@ using App.Repositories.Enums;
 using App.Repositories.Meters;
 using App.Repositories.PriceInfos;
 using App.Services.Invoices.SerhatYas.EnergyBilling.App.Services.Invoices;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,13 @@ namespace App.Services.Invoices
         //tüm sayaçları hesaplar
         public async Task<InvoiceCalculationResponse> CalculateInvoicesAsync(InvoiceCalculationRequest request)
         {
+
+            if (request.EndDate < request.StartDate)
+                throw new ArgumentException("Bitiş tarihi başlangıç tarihinden önce olamaz");
+
+            if (request.MeterNumbers != null && request.MeterNumbers.Any(string.IsNullOrWhiteSpace))
+                throw new ArgumentException("Sayaç numarası boş olamaz");
+
             var response = new InvoiceCalculationResponse();
 
             // Sayaçları getir
@@ -60,6 +68,13 @@ namespace App.Services.Invoices
         // Tek sayaç faturası
         public async Task<InvoiceDetail> CalculateMeterInvoiceAsync(string meterNumber, DateTime startDate, DateTime endDate)
         {
+
+            if (endDate < startDate)
+                throw new ArgumentException("Bitiş tarihi başlangıç tarihinden önce olamaz");
+
+            if (string.IsNullOrWhiteSpace(meterNumber))
+                throw new ArgumentException("Sayaç numarası boş olamaz");
+
             // Sayaç bilgisini getir
             var meter = await _meterRepository.GetByMeterNumberAsync(meterNumber);
             if (meter == null)
