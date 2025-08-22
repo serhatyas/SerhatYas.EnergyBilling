@@ -15,6 +15,11 @@ namespace App.API.Handlers.Invoices
 
         public async Task<InvoiceDetail> Handle(GetMeterInvoiceQuery request, CancellationToken cancellationToken)
         {
+            // Query'yi service request'ine çevir
+            //Cache
+            //Logging 
+            //Authorization
+
             return await _invoiceCalculationService.CalculateMeterInvoiceAsync(
                 request.MeterNumber,
                 request.StartDate,
