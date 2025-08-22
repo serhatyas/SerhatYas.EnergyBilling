@@ -20,6 +20,8 @@ namespace App.API.Handlers.Invoices
             //Cache
             //Logging 
             //Authorization
+            //validation
+
             var serviceRequest = new InvoiceCalculationRequest
             {
                 MeterNumbers = request.MeterNumbers,

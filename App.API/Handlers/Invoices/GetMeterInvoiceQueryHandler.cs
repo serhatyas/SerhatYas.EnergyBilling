@@ -19,6 +19,7 @@ namespace App.API.Handlers.Invoices
             //Cache
             //Logging 
             //Authorization
+            //validation
 
             return await _invoiceCalculationService.CalculateMeterInvoiceAsync(
                 request.MeterNumber,
