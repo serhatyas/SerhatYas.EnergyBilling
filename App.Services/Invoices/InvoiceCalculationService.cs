@@ -19,7 +19,8 @@ namespace App.Services.Invoices
 
     // Fatura hesaplama servisi
 
-    public class InvoiceCalculationService : IInvoiceCalculationService
+    public class InvoiceCalculationService
+        : IInvoiceCalculationService
     {
         private readonly IMeterRepository _meterRepository;
         private readonly IConsumptionRepository _consumptionRepository;

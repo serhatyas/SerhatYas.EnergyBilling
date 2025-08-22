@@ -22,6 +22,7 @@ namespace App.Repositories.Base
             return await Task.FromResult(_data.AsEnumerable());
         }
 
+        // ID'ye göre kayıt bul
         public virtual async Task<T?> GetByIdAsync(object id)
         {
             return await Task.FromResult(_data.FirstOrDefault());
