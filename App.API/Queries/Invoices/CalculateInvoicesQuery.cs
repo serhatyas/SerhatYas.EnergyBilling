@@ -11,6 +11,10 @@ namespace App.API.Queries.Invoices
 
         public CalculateInvoicesQuery(List<string> meterNumbers, DateTime startDate, DateTime endDate)
         {
+
+            //JSON naming
+            //Tip dönüşümü 
+
             MeterNumbers = meterNumbers ?? new List<string>();
             StartDate = startDate;
             EndDate = endDate;

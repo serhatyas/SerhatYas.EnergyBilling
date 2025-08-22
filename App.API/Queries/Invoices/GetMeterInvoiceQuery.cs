@@ -12,6 +12,10 @@ namespace App.API.Queries.Invoices
 
         public GetMeterInvoiceQuery(string meterNumber, DateTime startDate, DateTime endDate)
         {
+
+            //JSON naming
+            //Tip dönüşümü 
+
             MeterNumber = meterNumber;
             StartDate = startDate;
             EndDate = endDate;
